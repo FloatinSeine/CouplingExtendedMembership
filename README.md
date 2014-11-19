@@ -10,7 +10,7 @@ Configuration<br />
 Modify the web.config of the web application to inlcude the following sections. <br />
 The key property to modify is the connectionString to ensure points to your instance of RaveDB.
 <pre></pre>
-<code>
+<xmp>
 <configuration>
   <connectionStrings>
     <add name="CouplingDataStore" connectionString="URL=http://localhost:8080;Database=Coupling" />
@@ -26,7 +26,7 @@ The key property to modify is the connectionString to ensure points to your inst
     </membership>
   </system.web>
 </configuration>
-</code>
+</xmp>
 
 
 Web Application Integration<br />
