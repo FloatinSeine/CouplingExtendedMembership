@@ -1,9 +1,13 @@
 Coupling - ExtendedMembershipProvider
 ===========
 
-A basic working PoC to demonstrate using the ExtendedMembershipProvider with a DDD membership account model data management and RaveDB storage.<br />
+A basic working PoC to demonstrate using the ExtendedMembershipProvider with a DDD membership account model data management and RaveDB storage.
+The aim was the decouple the storage engine from the main application and Membership Provider.<br />
 <br />
 Its a bit rough and ready at the moment, much is missing but most of the basic concepts are included providing a base to extend further.</br>
+<br />
+<br />
+The design makes it easy enough now to plug in a different storage engine, e.g. MySQL or even an API and to switch out the ExtendedMembershipProvider in favour of different authentication method such as using Claims framework
 <br/>
 <br />
 <strong>Configuration</strong><br />
