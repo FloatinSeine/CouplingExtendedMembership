@@ -1,14 +1,16 @@
-Coupling - RavenDB-DDD-ExtendedMembershipProvider
+Coupling - ExtendedMembershipProvider
 ===========
 
 A basic working PoC to demonstrate using the ExtendedMembershipProvider with a DDD membership account model data management and RaveDB storage.<br />
 <br />
 Its a bit rough and ready at the moment, much is missing but most of the basic concepts are included providing a base to extend further.</br>
-</br>
+<br/>
+<br />
 Configuration<br />
-Modify the web.config of the web application to inlcude the following sections. 
+Modify the web.config of the web application to inlcude the following sections. <br />
 The key property to modify is the connectionString to ensure points to your instance of RaveDB.
-<pre>
+<pre></pre>
+<code>
 <configuration>
   <connectionStrings>
     <add name="CouplingDataStore" connectionString="URL=http://localhost:8080;Database=Coupling" />
@@ -24,10 +26,11 @@ The key property to modify is the connectionString to ensure points to your inst
     </membership>
   </system.web>
 </configuration>
-</pre>
+</code>
+
 
 Web Application Integration<br />
 To integration into your own web application see the sample Coupling.Web package.<br>
-Structuremap has been used for Dependency Injection. Each package contains a DepenencyResolution folder with a registry for injectable components.
+Add a reference to the Coupling.Web.ApplicationServices package and include Structuremap which has been used for Dependency Injection. Each package contains a DepenencyResolution folder with a registry for injectable components.
 
 
