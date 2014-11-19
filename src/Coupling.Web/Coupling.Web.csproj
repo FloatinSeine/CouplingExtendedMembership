@@ -324,9 +324,6 @@
     <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Coupling.Web.ApplicationServices\Coupling.Web.ApplicationServices.csproj">
       <Project>{EDCFFD36-B49F-4502-B034-BD91E19BAD9A}</Project>
       <Name>Coupling.Web.ApplicationServices</Name>
