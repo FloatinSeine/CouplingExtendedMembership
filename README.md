@@ -1,10 +1,10 @@
 Coupling - RavenDB-DDD-ExtendedMembershipProvider
 ===========
 
-A basic PoC to demonstrate using the ExtendedMembershipProvider with use of DDD and RaveDB memberships data management and storage
-
-Its a bit rough and ready at the moment, much is missing but most of the basic concepts are included providing a base to extend further.
-
+A basic working PoC to demonstrate using the ExtendedMembershipProvider with a DDD membership account model data management and RaveDB storage.<br />
+<br />
+Its a bit rough and ready at the moment, much is missing but most of the basic concepts are included providing a base to extend further.</br>
+</br>
 Configuration<br />
 Modify the web.config of the web application to inlcude the following sections. 
 The key property to modify is the connectionString to ensure points to your instance of RaveDB.
