@@ -1,9 +1,7 @@
-﻿
-using System;
-using System.Security.Policy;
+﻿using System;
 using Coupling.Domain.CQRS.Command;
-using Coupling.Domain.Membership;
-using Coupling.Domain.Membership.Commands;
+using Coupling.Domain.Model.Membership;
+using Coupling.Domain.Model.Membership.Commands;
 using Coupling.Web.ApplicationServices.Memberships;
 
 namespace Coupling.Web.ApplicationServices.Implementation

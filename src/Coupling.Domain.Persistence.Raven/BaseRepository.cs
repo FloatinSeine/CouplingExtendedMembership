@@ -4,7 +4,7 @@ using Raven.Client;
 
 namespace Coupling.Domain.Persistence.Raven
 {
-    public abstract class BaseRepository<TEntity> : IDisposable where TEntity : class, new()
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class, new()
     {
         protected IDocumentSession Session { get; private set; }
 

@@ -77,12 +77,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Coupling.Domain.Model.Membership\Coupling.Domain.Model.Membership.csproj">
+      <Project>{55292674-FC5E-4F1E-ABC4-CBAB33447296}</Project>
+      <Name>Coupling.Domain.Model.Membership</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coupling.Domain\Coupling.Domain.csproj">
       <Project>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</Project>
       <Name>Coupling.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

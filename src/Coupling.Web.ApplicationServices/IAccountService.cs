@@ -1,6 +1,6 @@
 ﻿
 using System;
-using Coupling.Domain.Membership;
+using Coupling.Domain.Model.Membership;
 
 namespace Coupling.Web.ApplicationServices
 {

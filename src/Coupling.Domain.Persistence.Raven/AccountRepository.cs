@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Linq;
-using Coupling.Domain.Membership;
-using Raven.Abstractions.Extensions;
+using Coupling.Domain.Model.Membership;
 using Raven.Client.Linq;
 
 namespace Coupling.Domain.Persistence.Raven

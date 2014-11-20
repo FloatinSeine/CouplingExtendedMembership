@@ -1,4 +1,4 @@
-﻿using Coupling.Domain.Membership;
+﻿using Coupling.Domain.Model.Membership;
 using Coupling.Domain.Persistence.Raven.Implementation;
 using Raven.Client;
 using StructureMap.Configuration.DSL;

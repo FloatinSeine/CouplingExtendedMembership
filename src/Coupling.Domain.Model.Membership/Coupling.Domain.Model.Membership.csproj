@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</ProjectGuid>
+    <ProjectGuid>{55292674-FC5E-4F1E-ABC4-CBAB33447296}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coupling.Domain</RootNamespace>
-    <AssemblyName>Coupling.Domain</AssemblyName>
+    <RootNamespace>Coupling.Domain.Model.Membership</RootNamespace>
+    <AssemblyName>Coupling.Domain.Model.Membership</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StructureMap">
+    <Reference Include="StructureMap, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
@@ -46,23 +47,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CQRS\Command\IBus.cs" />
-    <Compile Include="CQRS\Command\ICommand.cs" />
-    <Compile Include="CQRS\Command\ICommandHandler.cs" />
-    <Compile Include="CQRS\Command\InProcessBus.cs" />
-    <Compile Include="CQRS\Query\IQuery.cs" />
-    <Compile Include="CQRS\Query\ISpecification.cs" />
-    <Compile Include="DDD\AggregateRoot.cs" />
-    <Compile Include="DDD\Entity.cs" />
-    <Compile Include="DDD\EntityStatus.cs" />
-    <Compile Include="DDD\IDomainEvent.cs" />
-    <Compile Include="DDD\IDomainEventPublisher.cs" />
-    <Compile Include="DDD\ValueObject.cs" />
-    <Compile Include="DepenencyResolution\DomainRegistry.cs" />
-    <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountStatus.cs" />
+    <Compile Include="Commands\AccountCommand.cs" />
+    <Compile Include="Commands\ActivateAccountCommand.cs" />
+    <Compile Include="Commands\ChangePasswordCommand.cs" />
+    <Compile Include="Commands\FailedPasswordMatch.cs" />
+    <Compile Include="DepenencyResolution\MembershipRegistry.cs" />
+    <Compile Include="Dtos\FailedPasswordDetailsDto.cs" />
+    <Compile Include="Handlers\ActivateAccountHandler.cs" />
+    <Compile Include="Handlers\PasswordChangeHandler.cs" />
+    <Compile Include="IAccountFactory.cs" />
+    <Compile Include="IAccountRepository.cs" />
+    <Compile Include="IFailedPasswordQuery.cs" />
+    <Compile Include="IFindAccountQuery.cs" />
+    <Compile Include="Implementation\AccountFactory.cs" />
+    <Compile Include="Implementation\Queries\AccountFinder.cs" />
+    <Compile Include="Implementation\Queries\FailedPasswordQuery.cs" />
+    <Compile Include="LocalMembership.cs" />
+    <Compile Include="OAuthMembership.cs" />
+    <Compile Include="PasswordResetOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coupling.Domain\Coupling.Domain.csproj">
+      <Project>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</Project>
+      <Name>Coupling.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

@@ -75,6 +75,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Coupling.Domain.Model.Membership\Coupling.Domain.Model.Membership.csproj">
+      <Project>{55292674-FC5E-4F1E-ABC4-CBAB33447296}</Project>
+      <Name>Coupling.Domain.Model.Membership</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coupling.Domain.Persistence.Raven\Coupling.Domain.Persistence.Raven.csproj">
       <Project>{5AA5D2EB-DC5B-4557-831E-52B61BDB72B1}</Project>
       <Name>Coupling.Domain.Persistence.Raven</Name>

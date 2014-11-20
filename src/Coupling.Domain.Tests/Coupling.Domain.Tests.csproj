@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</ProjectGuid>
+    <ProjectGuid>{DE58C343-3C15-4066-ACB2-81DC2660BCA6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coupling.Domain</RootNamespace>
-    <AssemblyName>Coupling.Domain</AssemblyName>
+    <RootNamespace>Coupling.Domain.Tests</RootNamespace>
+    <AssemblyName>Coupling.Domain.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,11 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4">
-      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.Net4.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,25 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CQRS\Command\IBus.cs" />
-    <Compile Include="CQRS\Command\ICommand.cs" />
-    <Compile Include="CQRS\Command\ICommandHandler.cs" />
-    <Compile Include="CQRS\Command\InProcessBus.cs" />
-    <Compile Include="CQRS\Query\IQuery.cs" />
-    <Compile Include="CQRS\Query\ISpecification.cs" />
-    <Compile Include="DDD\AggregateRoot.cs" />
-    <Compile Include="DDD\Entity.cs" />
-    <Compile Include="DDD\EntityStatus.cs" />
-    <Compile Include="DDD\IDomainEvent.cs" />
-    <Compile Include="DDD\IDomainEventPublisher.cs" />
-    <Compile Include="DDD\ValueObject.cs" />
-    <Compile Include="DepenencyResolution\DomainRegistry.cs" />
-    <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="DDD\EntityTests.cs" />
+    <Compile Include="DDD\Fakes\FakeEntity.cs" />
+    <Compile Include="DDD\Fakes\FakeValueObject.cs" />
+    <Compile Include="DDD\ValueObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coupling.Domain\Coupling.Domain.csproj">
+      <Project>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</Project>
+      <Name>Coupling.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
