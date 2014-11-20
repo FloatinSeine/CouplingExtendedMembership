@@ -2,6 +2,7 @@
 using Coupling.Domain.Persistence.Raven.Implementation;
 using Raven.Client;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace Coupling.Domain.Persistence.Raven.DepenencyResolution
 {
@@ -22,7 +23,7 @@ namespace Coupling.Domain.Persistence.Raven.DepenencyResolution
                         y.ConstructedBy("Fetch Raven IDocumentSession",
                             z => z.GetInstance<IRavenSessionFactory>().CreateSession()));
 
-            For<IAccountRepository>().Use<AccountRepository>();
+            For<IAccountRepository>(Lifecycles.Transient).Use<AccountRepository>();
         }
 
     }

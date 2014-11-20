@@ -57,10 +57,10 @@ namespace Coupling.Web.ApplicationServices.Implementation
             if (acc == null) throw new Exception("Can not find account for username " + username);
 
             var hash = _encryptor.Encrypt(password, acc.Membership.Salt);
-            if (acc.IsValidPassword(hash)) return true;
-            _bus.Send(new FailedPasswordMatch(acc.Id));
-            return false;
-            //return _query.IsValidCredentials(username, password);
+            var b = acc.IsValidPassword(hash);
+
+            _bus.Send(new PasswordMatch(acc.Id, b));
+            return b;
         }
 
         public DateTime GetLastPasswordFailureDate(string userName)
@@ -113,7 +113,7 @@ namespace Coupling.Web.ApplicationServices.Implementation
             var hash = _encryptor.Encrypt(oldPassword, acc.Membership.Salt);
             if (!acc.IsValidPassword(hash))
             {
-                _bus.Send(new FailedPasswordMatch(acc.Id));
+                _bus.Send(new PasswordMatch(acc.Id, false));
                 throw new Exception("User Credentials do not match");
             }
 

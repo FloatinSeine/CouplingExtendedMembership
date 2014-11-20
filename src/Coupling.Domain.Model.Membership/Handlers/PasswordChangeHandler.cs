@@ -4,7 +4,7 @@ using Coupling.Domain.Model.Membership.Commands;
 
 namespace Coupling.Domain.Model.Membership.Handlers
 {
-    public class PasswordChangeHandler : ICommand<ChangePasswordCommand>, ICommand<FailedPasswordMatch>
+    public class PasswordChangeHandler : ICommand<ChangePasswordCommand>, ICommand<PasswordMatch>
     {
         private readonly IAccountRepository _repository;
 
@@ -20,10 +20,12 @@ namespace Coupling.Domain.Model.Membership.Handlers
             _repository.CommitChanges();
         }
 
-        public void Execute(FailedPasswordMatch command)
+        public void Execute(PasswordMatch command)
         {
             var acc = _repository.Get(command.Id);
-            acc.Membership.FailedPasswordMatch();
+            if (command.Matched) acc.Membership.ResetPasswordMatches();
+            else acc.Membership.FailedPasswordMatch();
+            _repository.CommitChanges();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Coupling.Domain.Model.Membership
             LastPasswordFailureDate = DateTime.UtcNow;
         }
 
-        private void ResetPasswordMatches()
+        internal void ResetPasswordMatches()
         {
             FailedPasswordMatchAttempts = 0;
             LastPasswordFailureDate = DateTime.MaxValue;

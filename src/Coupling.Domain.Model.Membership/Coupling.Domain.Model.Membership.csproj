@@ -52,7 +52,7 @@
     <Compile Include="Commands\AccountCommand.cs" />
     <Compile Include="Commands\ActivateAccountCommand.cs" />
     <Compile Include="Commands\ChangePasswordCommand.cs" />
-    <Compile Include="Commands\FailedPasswordMatch.cs" />
+    <Compile Include="Commands\PasswordMatch.cs" />
     <Compile Include="DepenencyResolution\MembershipRegistry.cs" />
     <Compile Include="Dtos\FailedPasswordDetailsDto.cs" />
     <Compile Include="Handlers\ActivateAccountHandler.cs" />

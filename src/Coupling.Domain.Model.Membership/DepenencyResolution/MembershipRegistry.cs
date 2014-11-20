@@ -16,7 +16,7 @@ namespace Coupling.Domain.Model.Membership.DepenencyResolution
             ForSingletonOf<IFailedPasswordQuery>().Use<FailedPasswordQuery>();
 
             ForSingletonOf<ICommand<ChangePasswordCommand>>().Use<PasswordChangeHandler>();
-            ForSingletonOf<ICommand<FailedPasswordMatch>>().Use<PasswordChangeHandler>();
+            ForSingletonOf<ICommand<PasswordMatch>>().Use<PasswordChangeHandler>();
             ForSingletonOf<ICommand<ActivateAccountCommand>>().Use<ActivateAccountHandler>();
         }
     }
