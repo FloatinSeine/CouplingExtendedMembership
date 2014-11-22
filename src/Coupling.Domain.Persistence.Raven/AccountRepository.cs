@@ -8,7 +8,8 @@ namespace Coupling.Domain.Persistence.Raven
     public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
 
-        public AccountRepository(IRavenSessionFactory factory) : base(factory)
+        public AccountRepository(IRavenSessionFactory factory)
+            : base(factory)
         {
         }
 
@@ -20,12 +21,13 @@ namespace Coupling.Domain.Persistence.Raven
 
         public Account GetByUsername(string username)
         {
-            return Session.Query<Account>().FirstOrDefault(x => x.Username == username);
+            var acc= Session.Query<Account>().SingleOrDefault(x => x.Username == username);
+            return acc;
         }
 
         public Account GetByConfirmationToken(string activationToken)
         {
-            return Session.Query<Account>().FirstOrDefault(x => x.ActivationToken == activationToken);
+            return Session.Query<Account>().Single(x => x.ActivationToken == activationToken);
         }
 
         public bool AccountExists(string username, string passwordHash)

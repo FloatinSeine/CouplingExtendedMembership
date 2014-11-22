@@ -7,7 +7,7 @@ namespace Coupling.Domain.Model.Membership
         Account FindById(string id);
         Account FindByUserName(string username);
         Account FindByConfirmationToken(string confirmationToken);
-        bool IsValidCredentials(string username, string passwordHash);
+        //bool IsValidCredentials(string username, string passwordHash);
         string GetUserIdFromPasswordResetToken(string token);
     }
 }

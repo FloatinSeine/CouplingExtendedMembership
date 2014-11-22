@@ -53,8 +53,8 @@ namespace Coupling.Web.ApplicationServices.Implementation
             if (string.IsNullOrEmpty(username)) throw new ArgumentException("Username is invalid", "username");
             if (string.IsNullOrEmpty(username)) throw new ArgumentException("Password is invalid", "password");
 
-            var acc = _query.FindByUserName(username);
-            if (acc == null) throw new Exception("Can not find account for username " + username);
+            var acc = GetAccount(username, true);
+            if (acc == null) return false;
 
             var hash = _encryptor.Encrypt(password, acc.Membership.Salt);
             var b = acc.IsValidPassword(hash);
@@ -120,6 +120,7 @@ namespace Coupling.Web.ApplicationServices.Implementation
             try
             {
                 var newhash = _encryptor.Encrypt(newPassword);
+                acc.ChangePassword(GetHashSalt(newhash), GetHashPassword(newhash));
                 _bus.Send(new ChangePasswordCommand(acc.Id, GetHashSalt(newhash), GetHashPassword(newhash)));
             }
             catch (Exception ex)
@@ -132,11 +133,13 @@ namespace Coupling.Web.ApplicationServices.Implementation
         private static string GetHashSalt(string hash)
         {
             var splitIdx = hash.IndexOf("#-#", StringComparison.InvariantCulture);
+            if (splitIdx == -1) return string.Empty;
             return hash.Substring(0, splitIdx);
         }
         private static string GetHashPassword(string hash)
         {
             var splitIdx = hash.IndexOf("#-#", StringComparison.InvariantCulture);
+            if (splitIdx == -1) return hash;
             return hash.Substring(splitIdx + 3);
         }
 

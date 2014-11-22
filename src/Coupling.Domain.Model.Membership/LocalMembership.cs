@@ -16,10 +16,9 @@ namespace Coupling.Domain.Model.Membership
 
         public string Password { get; private set; }
         public string Salt { get; private set; }
-        public int FailedPasswordMatchAttempts { get; private set; }
-        public DateTime LastPasswordFailureDate { get; private set; }
         public DateTime PasswordChangeDate { get; private set; }
-        
+        public int FailedPasswordMatchAttempts { get; private set; }
+        public DateTime LastPasswordFailureDate { get; private set; }    
 
         public bool IsValidPassword(string passwordHash)
         {
@@ -27,15 +26,6 @@ namespace Coupling.Domain.Model.Membership
             if (b) ResetPasswordMatches();
             else FailedPasswordMatch();
             return b;
-        }
-
-        public bool ResetPassword(string salt, string passwordHash)
-        {
-            Salt = salt;
-            Password = passwordHash;
-            PasswordChangeDate = DateTime.UtcNow;
-            ResetPasswordMatches();
-            return true;
         }
 
         internal void FailedPasswordMatch()

@@ -10,14 +10,14 @@ namespace Coupling.Domain.Persistence.Raven.DepenencyResolution
     {
         public RavenRepositoryRegistry()
         {
-            ForSingletonOf<IRavenSessionFactoryBuilder>().Use<CouplingRavenSessionFactoryBuilder>();
-            ForSingletonOf<IRavenSessionFactory>().Use<RavenSessionFactory>();
+            For<IRavenSessionFactoryBuilder>().Use<CouplingRavenSessionFactoryBuilder>();
+            //ForSingletonOf<IRavenSessionFactory>().Use<RavenSessionFactory>();
 
-            ForSingletonOf<IRavenSessionFactory>()
+            For<IRavenSessionFactory>()
                     .UseSpecial(y => y.ConstructedBy("Fetch Raven Session Factory", z => z.GetInstance<IRavenSessionFactoryBuilder>()
                                 .GetSessionFactory()));
 
-            ForSingletonOf<IDocumentSession>()
+            For<IDocumentSession>()
                 .UseSpecial(
                     y =>
                         y.ConstructedBy("Fetch Raven IDocumentSession",

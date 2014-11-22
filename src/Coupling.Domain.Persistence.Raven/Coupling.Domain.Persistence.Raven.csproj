@@ -34,11 +34,12 @@
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.1\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.Client.2.5.2935\lib\net40\Raven.Abstractions.dll</HintPath>
+    <Reference Include="Raven.Abstractions, Version=2.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Client.2.5.2939\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\packages\RavenDB.Client.2.5.2935\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Raven.Client.Lightweight, Version=2.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.2.5.2939\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
@@ -62,9 +63,6 @@
     <Compile Include="AccountRepository.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Configuration\RavenConfigurationManager.cs" />
-    <Compile Include="Converters\IncludeNonPublicMembersContractResolver.cs" />
-    <Compile Include="Converters\JsonCreationConverter.cs" />
-    <Compile Include="Converters\LocalMembershipConverter.cs" />
     <Compile Include="Implementation\CouplingRavenSessionFactoryBuilder.cs" />
     <Compile Include="DepenencyResolution\RavenRepositoryRegistry.cs" />
     <Compile Include="IRavenSessionFactory.cs" />

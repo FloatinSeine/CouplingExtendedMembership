@@ -29,7 +29,8 @@ namespace Coupling.Domain.Model.Membership.Implementation.Queries
 
         public bool IsValidCredentials(string username, string passwordHash)
         {
-            return _repository.AccountExists(username, passwordHash);
+            throw new NotImplementedException();
+            //return _repository.AccountExists(username, passwordHash);
         }
 
         public string GetUserIdFromPasswordResetToken(string token)

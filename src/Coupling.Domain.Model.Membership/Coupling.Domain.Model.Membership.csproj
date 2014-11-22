@@ -55,6 +55,7 @@
     <Compile Include="Commands\PasswordMatch.cs" />
     <Compile Include="DepenencyResolution\MembershipRegistry.cs" />
     <Compile Include="Dtos\FailedPasswordDetailsDto.cs" />
+    <Compile Include="Events\PasswordChangedEvent.cs" />
     <Compile Include="Handlers\ActivateAccountHandler.cs" />
     <Compile Include="Handlers\PasswordChangeHandler.cs" />
     <Compile Include="IAccountFactory.cs" />
@@ -69,9 +70,7 @@
     <Compile Include="PasswordResetOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Coupling.Domain\Coupling.Domain.csproj">
       <Project>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</Project>

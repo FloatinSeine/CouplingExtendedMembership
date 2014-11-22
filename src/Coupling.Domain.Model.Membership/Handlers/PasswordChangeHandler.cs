@@ -16,7 +16,7 @@ namespace Coupling.Domain.Model.Membership.Handlers
         public void Execute(ChangePasswordCommand command)
         {
             var acc = _repository.Get(command.Id);
-            acc.ResetPassword(command.Salt, command.Password);
+            acc.ChangePassword(command.Salt, command.Password);
             _repository.CommitChanges();
         }
 

@@ -59,11 +59,10 @@ namespace Coupling.Domain.Model.Membership
             return Membership != null && Membership.IsValidPassword(passwordHash);
         }
 
-        public bool ResetPassword(string salt, string passwordHash)
+        public void ChangePassword(string salt, string password)
         {
-            var b = Membership.ResetPassword(salt, passwordHash);
+            Membership = new LocalMembership(salt, password);
             UpdateVersion();
-            return b;
         }
 
         public bool IsLocalMembershipActived()

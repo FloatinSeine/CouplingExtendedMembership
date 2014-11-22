@@ -12,12 +12,12 @@ namespace Coupling.Domain.Model.Membership.DepenencyResolution
         public MembershipRegistry()
         {
             ForSingletonOf<IAccountFactory>().Use<AccountFactory>();
-            ForSingletonOf<IFindAccountQuery>().Use<AccountFinder>();
-            ForSingletonOf<IFailedPasswordQuery>().Use<FailedPasswordQuery>();
+            For<IFindAccountQuery>().Use<AccountFinder>();
+            For<IFailedPasswordQuery>().Use<FailedPasswordQuery>();
 
-            ForSingletonOf<ICommand<ChangePasswordCommand>>().Use<PasswordChangeHandler>();
-            ForSingletonOf<ICommand<PasswordMatch>>().Use<PasswordChangeHandler>();
-            ForSingletonOf<ICommand<ActivateAccountCommand>>().Use<ActivateAccountHandler>();
+            For<ICommand<ChangePasswordCommand>>().Use<PasswordChangeHandler>();
+            For<ICommand<PasswordMatch>>().Use<PasswordChangeHandler>();
+            For<ICommand<ActivateAccountCommand>>().Use<ActivateAccountHandler>();
         }
     }
 }

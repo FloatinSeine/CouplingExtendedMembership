@@ -9,6 +9,6 @@ namespace Coupling.Domain.Model.Membership
         void Store(Account account);
         Account GetByUsername(string username);
         Account GetByConfirmationToken(string confirmationToken);
-        bool AccountExists(string username, string passwordHash);
+        //bool AccountExists(string username, string passwordHash);
     }
 }
