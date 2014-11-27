@@ -96,12 +96,6 @@ namespace Coupling.Web.ApplicationServices.Implementation
             throw new NotImplementedException();
         }
 
-
-        public bool DeleteAccount(string userName)
-        {
-            throw new NotImplementedException();
-        }
-
         public Account GetAccount(string username, bool isOnline)
         {
             return _query.FindByUserName(username);
@@ -128,6 +122,26 @@ namespace Coupling.Web.ApplicationServices.Implementation
                 throw new Exception("Failed to send update command.", ex);
             }
             return true;
+        }
+
+        public string GetUserNameFromId(int userId)
+        {
+            var acc = _query.FindByUserId(userId);
+            return acc != null ? acc.Username : string.Empty;
+        }
+
+
+        public int GetUserIdFromOAuth(string provider, string providerUserId)
+        {
+            var acc = _query.FindByOAuthProvider(provider, providerUserId);
+            return acc != null ? acc.UserId : -1;
+        }
+
+        public void AppendOAuthAccount(string username, string provider, string providerUserId)
+        {
+            var acc = GetAccount(username, true);
+            acc.AppendOAuthMembership(new OAuthMembership(provider, providerUserId));
+            _bus.Send(new AppendOAuthAccountCommand(acc.Id, provider, providerUserId));
         }
 
         private static string GetHashSalt(string hash)

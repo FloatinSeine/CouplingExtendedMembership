@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Coupling.Domain.DDD;
 
 namespace Coupling.Domain.Model.Membership
 {
-    public class LocalMembership : ValueObject
+    public class LocalMembership : Entity
     {
         public LocalMembership(string salt, string password)
         {
@@ -14,7 +13,7 @@ namespace Coupling.Domain.Model.Membership
             ResetPasswordMatches();
         }
 
-        public string Password { get; private set; }
+        private string Password { get; set; }
         public string Salt { get; private set; }
         public DateTime PasswordChangeDate { get; private set; }
         public int FailedPasswordMatchAttempts { get; private set; }
@@ -40,11 +39,5 @@ namespace Coupling.Domain.Model.Membership
             LastPasswordFailureDate = DateTime.MaxValue;
         }
 
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Password;
-            yield return Salt;
-            yield return PasswordChangeDate;
-        }
     }
 }

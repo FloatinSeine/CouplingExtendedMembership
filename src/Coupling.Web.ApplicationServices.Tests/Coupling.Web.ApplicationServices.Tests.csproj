@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Cryptography\CryptographicServiceTests.cs" />
     <Compile Include="Cryptography\SaltProviderTests.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

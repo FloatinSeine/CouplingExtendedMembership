@@ -18,6 +18,7 @@ namespace Coupling.Domain.Model.Membership.DepenencyResolution
             For<ICommand<ChangePasswordCommand>>().Use<PasswordChangeHandler>();
             For<ICommand<PasswordMatch>>().Use<PasswordChangeHandler>();
             For<ICommand<ActivateAccountCommand>>().Use<ActivateAccountHandler>();
+            For<ICommand<AppendOAuthAccountCommand>>().Use<AccountOAuthHandler>();
         }
     }
 }

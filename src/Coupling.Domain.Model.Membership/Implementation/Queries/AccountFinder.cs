@@ -27,10 +27,15 @@ namespace Coupling.Domain.Model.Membership.Implementation.Queries
             return _repository.GetByConfirmationToken(confirmationToken);
         }
 
-        public bool IsValidCredentials(string username, string passwordHash)
+
+        public Account FindByOAuthProvider(string provider, string providerUserId)
         {
-            throw new NotImplementedException();
-            //return _repository.AccountExists(username, passwordHash);
+            return _repository.GetByOAuthProvider(provider, providerUserId);
+        }
+
+        public Account FindByUserId(int userId)
+        {
+            return _repository.GetByUserId(userId);
         }
 
         public string GetUserIdFromPasswordResetToken(string token)

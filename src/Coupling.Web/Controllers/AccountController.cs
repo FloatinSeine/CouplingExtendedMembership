@@ -136,7 +136,7 @@ namespace Coupling.Web.Controllers
             //var x = WebSecurity.GetUserId(User.Identity.Name);
             //throw new Exception("User Id = " + x);
 
-            ViewBag.HasLocalPassword = true; //OAuthWebSecurity.HasLocalAccount(1);
+            ViewBag.HasLocalPassword = true; OAuthWebSecurity.HasLocalAccount(1);
             //ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();

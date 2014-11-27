@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel.Design;
 using System.Configuration.Provider;
 using System.Linq;
-using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Security;
+using Coupling.Domain.Model.Membership;
 using WebMatrix.WebData;
 using Coupling.Web.ApplicationServices.Extensions;
 
@@ -28,6 +27,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
         private bool _requiresUniqueEmail;
         private bool _requiresQuestionAndAnswer;
         private bool _enablePasswordReset;
+        private string _passwordStregthRegularExpression;
         private MembershipPasswordFormat _passwordFormat;
 
         public CouplingExtendedMembershipProvider()
@@ -59,9 +59,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             _enablePasswordRetrieval = config.GetValue("enablePasswordRetrieval", false);
             _requiresQuestionAndAnswer = config.GetValue("requiresQuestionAndAnswer", false);
             _requiresUniqueEmail = config.GetValue("requiresUniqueEmail", true);
-            //_passwordStregthRegularExpression = Convert.ToString(GetConfigValue(config["passwordStrengthRegularExpression"], String.Empty));
-            
-            
+            _passwordStregthRegularExpression = config.GetValue("passwordStrengthRegularExpression", PasswordStrengthRegularExpressions.StrengthWeek);
 
             SetPasswordFormat(config.GetValue("passwordFormat", "Hashed"));
         }
@@ -119,7 +117,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
 
         public override string PasswordStrengthRegularExpression
         {
-            get { throw new NotImplementedException(); }
+            get { return _passwordStregthRegularExpression; }
         }
 
         public override bool RequiresQuestionAndAnswer
@@ -147,23 +145,20 @@ namespace Coupling.Web.ApplicationServices.Memberships
             if(!_isInitialised) throw new Exception("Account service is not initialised");
         }
 
-        private static void ValidateUsername(string userName)
-        {
-            if (string.IsNullOrEmpty(userName)) throw new ArgumentException("Invalid UserName", "userName");
-        }
 
         public override bool ConfirmAccount(string accountConfirmationToken)
         {
             VerifyInitialised();
-            if(string.IsNullOrEmpty(accountConfirmationToken)) throw new ArgumentException("Invalid Confirmation Token", accountConfirmationToken);
+            ValidateArgument("accountConfirmationToken", accountConfirmationToken);
             return _service.ConfirmAccount(accountConfirmationToken);
         }
 
         public override bool ConfirmAccount(string userName, string accountConfirmationToken)
         {
             VerifyInitialised();
-            if (string.IsNullOrEmpty(userName)) throw new ArgumentException("Invalid username", "userName");
-            if (string.IsNullOrEmpty(accountConfirmationToken)) throw new ArgumentException("Invalid Confirmation Token", accountConfirmationToken);
+            ValidateArgument("userName", userName);
+            ValidateArgument("accountConfirmationToken", accountConfirmationToken);
+
             return _service.ConfirmAccount(userName, accountConfirmationToken);
         }
 
@@ -188,8 +183,8 @@ namespace Coupling.Web.ApplicationServices.Memberships
 
         public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
         {
-            VerifyInitialised();
-           var confirm = CreateAccount(userName, password, requireConfirmation);
+
+            var confirm = CreateAccount(userName, password, requireConfirmation);
 
             return confirm;
         }
@@ -197,20 +192,24 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override bool DeleteAccount(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
-            return _service.DeleteAccount(userName);
+            ValidateArgument("userName", userName);
+
+            throw new NotImplementedException("Membership accounts can not be directly deleted from website.");
         }
 
         public override string GeneratePasswordResetToken(string userName, int tokenExpirationInMinutesFromNow)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
+
             return _service.GeneratePasswordResetToken(userName, tokenExpirationInMinutesFromNow);
         }
 
         public override ICollection<OAuthAccountData> GetAccountsForUser(string userName)
         {
             VerifyInitialised();
+            ValidateArgument("userName", userName);
+
             var acc = _service.GetAccount(userName, true);
             if (acc.AuthMemberships.Count == 0) return new Collection<OAuthAccountData>();
             return acc.AuthMemberships.Select(mem => new OAuthAccountData(mem.Provider, mem.ProviderUserId)).ToList();
@@ -219,7 +218,8 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override DateTime GetCreateDate(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
+
 
             var acc = _service.GetAccount(userName, true);
             return acc.Created;
@@ -228,21 +228,21 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override DateTime GetLastPasswordFailureDate(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
             return _service.GetLastPasswordFailureDate(userName);
         }
 
         public override DateTime GetPasswordChangedDate(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
             return _service.GetPasswordChangedDate(userName);
         }
 
         public override int GetPasswordFailuresSinceLastSuccess(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
             return _service.GetPasswordFailuresSinceLastSuccess(userName);
         }
 
@@ -255,25 +255,25 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override bool IsConfirmed(string userName)
         {
             VerifyInitialised();
-            ValidateUsername(userName);
+            ValidateArgument("userName", userName);
             var acc = _service.GetAccount(userName, true);
-            return acc.IsActivated;
+            return (acc.AccountStatus == AccountStatus.Activated);
         }
 
         public override bool ResetPasswordWithToken(string token, string newPassword)
         {
             VerifyInitialised();
-            if(string.IsNullOrEmpty(token)) throw new ArgumentException("Invalid Token", "token");
-            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentException("Invalid Password", "newPassword");
+            ValidateArgument("token", token);
+            ValidateArgument("newPassword", newPassword);
             return _service.ResetPasswordWithToken(token, newPassword);
         }
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
             VerifyInitialised();
-            ValidateUsername(username);
-            if (string.IsNullOrEmpty(oldPassword)) throw new ArgumentException("Invalid Old Password");
-            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentException("Invalid New Password");
+            ValidateArgument("username", username);
+            ValidateArgument("oldPassword", oldPassword);
+            ValidateArgument("newPassword", newPassword);
 
             return _service.ChangePassword(username, oldPassword, newPassword);
         }
@@ -281,10 +281,10 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
             VerifyInitialised();
-            ValidateUsername(username);
-            if (string.IsNullOrEmpty(password)) throw new ArgumentException("Invalid password");
-            if (string.IsNullOrEmpty(newPasswordQuestion)) throw new ArgumentException("Invalid question", "newPasswordQuestion");
-            if (string.IsNullOrEmpty(newPasswordAnswer)) throw new ArgumentException("Invalid answer", "newPasswordAnswer");
+            ValidateArgument("username", username);
+            ValidateArgument("password", password);
+            ValidateArgument("newPasswordQuestion", newPasswordQuestion);
+            ValidateArgument("newPasswordAnswer", newPasswordAnswer);
             
             return _service.ChangePasswordQuestionAndAnswer(username, password, newPasswordQuestion, newPasswordAnswer);
         }
@@ -333,7 +333,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
             VerifyInitialised();
-            ValidateUsername(username);
+            ValidateArgument("username", username);
             var acc = _service.GetAccount(username, userIsOnline);
             return MembershipDecorator.Decorate(acc);
         }
@@ -371,8 +371,8 @@ namespace Coupling.Web.ApplicationServices.Memberships
         public override bool ValidateUser(string username, string password)
         {
             VerifyInitialised();
-            ValidateUsername(username);
-            if (string.IsNullOrEmpty(password)) throw new ArgumentException("Invalid Password", password);
+            ValidateArgument("username", username);
+            ValidateArgument("password", password);
 
             return _service.ValidateAccount(username, password);
         }
@@ -381,6 +381,26 @@ namespace Coupling.Web.ApplicationServices.Memberships
         {
             VerifyInitialised();
             return true;
+        }
+
+        public override string GetUserNameFromId(int userId)
+        {
+            return _service.GetUserNameFromId(userId);
+        }
+
+        public override int GetUserIdFromOAuth(string provider, string providerUserId)
+        {
+            return _service.GetUserIdFromOAuth(provider, providerUserId);
+        }
+
+        public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
+        {
+            _service.AppendOAuthAccount(userName, provider, providerUserId);
+        }
+
+        private static void ValidateArgument(string argumentName, string value)
+        {
+            if (string.IsNullOrEmpty(value)) throw new ArgumentException(string.Format("Invalid Argument {0}", argumentName), argumentName);
         }
 
     }

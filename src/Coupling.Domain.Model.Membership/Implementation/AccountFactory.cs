@@ -15,12 +15,13 @@ namespace Coupling.Domain.Model.Membership.Implementation
             var acc = _repository.GetByUsername(username) ?? new Account();
             if (string.IsNullOrEmpty(activationToken))
             {
-                acc.SetCredentials(username, salt, hashPassword);
+
+                acc.SetCredentials(_repository.GetNextUserId(), username, salt, hashPassword);
                 acc.Activate(activationToken);
             }
             else
             {
-                acc.SetCredentials(username, salt, hashPassword, activationToken);
+                acc.SetCredentials(_repository.GetNextUserId(), username, salt, hashPassword, activationToken);
             }
 
             _repository.Store(acc);

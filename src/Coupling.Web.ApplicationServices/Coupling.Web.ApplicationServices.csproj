@@ -69,8 +69,10 @@
     <Compile Include="IAccountService.cs" />
     <Compile Include="IEncrypt.cs" />
     <Compile Include="Implementation\AccountService.cs" />
+    <Compile Include="Memberships\ConvertEntityId.cs" />
     <Compile Include="Memberships\CouplingExtendedMembershipProvider.cs" />
     <Compile Include="Memberships\MembershipDecorator.cs" />
+    <Compile Include="Memberships\PasswordStrengthRegularExpressions.cs" />
     <Compile Include="Memberships\TokenFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

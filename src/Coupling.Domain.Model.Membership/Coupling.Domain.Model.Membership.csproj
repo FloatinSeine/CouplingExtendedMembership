@@ -51,11 +51,13 @@
     <Compile Include="AccountStatus.cs" />
     <Compile Include="Commands\AccountCommand.cs" />
     <Compile Include="Commands\ActivateAccountCommand.cs" />
+    <Compile Include="Commands\AppendOAuthAccountCommand.cs" />
     <Compile Include="Commands\ChangePasswordCommand.cs" />
     <Compile Include="Commands\PasswordMatch.cs" />
     <Compile Include="DepenencyResolution\MembershipRegistry.cs" />
     <Compile Include="Dtos\FailedPasswordDetailsDto.cs" />
     <Compile Include="Events\PasswordChangedEvent.cs" />
+    <Compile Include="Handlers\AccountOAuthHandler.cs" />
     <Compile Include="Handlers\ActivateAccountHandler.cs" />
     <Compile Include="Handlers\PasswordChangeHandler.cs" />
     <Compile Include="IAccountFactory.cs" />

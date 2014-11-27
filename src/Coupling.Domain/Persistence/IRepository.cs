@@ -10,7 +10,7 @@ namespace Coupling.Domain.Persistence
 
     }
 
-    public interface IRepository<TEntity> : IRepository where TEntity : class, new()
+    public interface IRepository<TEntity> : IRepository where TEntity : class
     {
         void Add(TEntity entity);
         int Count();

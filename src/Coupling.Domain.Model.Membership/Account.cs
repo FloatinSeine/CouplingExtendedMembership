@@ -4,11 +4,11 @@ using Coupling.Domain.DDD;
 
 namespace Coupling.Domain.Model.Membership
 {
-    public class Account : AggregateRoot
+    public sealed class Account : AggregateRoot
     {
         private readonly List<OAuthMembership> _authMemberships; 
 
-        public Account()
+        internal Account()
         {
             Created = DateTime.UtcNow;
             Activated = DateTime.MaxValue;
@@ -18,30 +18,27 @@ namespace Coupling.Domain.Model.Membership
         }
 
         public string Username { get; private set; }
+        public int UserId { get; private set; }
         public DateTime Created { get; private set; }
         public DateTime Activated { get; private set; }
         public string ActivationToken { get; private set; }
         public AccountStatus AccountStatus { get; private set; }
-        public bool IsActivated { get { return AccountStatus == AccountStatus.Activated; } }
+
         public List<OAuthMembership> AuthMemberships { get { return _authMemberships; }}
         public LocalMembership Membership { get; private set; }
 
-        private void CreateLocalMembership(string salt, string hashPassword)
+        internal void SetCredentials(int userId, string username, string salt, string hashPassword)
         {
-            Membership = new LocalMembership(salt, hashPassword);
-        }
-
-        public void SetCredentials(string username, string salt, string hashPassword)
-        {
+            UserId = userId;
             Username = username;
-            CreateLocalMembership(salt, hashPassword);
+            ChangePassword(salt, hashPassword);
             UpdateVersion();
         }
 
-        public void SetCredentials(string username, string salt, string hashPassword, string activationToken)
+        internal void SetCredentials(int userId, string username, string salt, string hashPassword, string activationToken)
         {  
             ActivationToken = activationToken;
-            SetCredentials(username, salt, hashPassword);
+            SetCredentials(userId, username, salt, hashPassword);
         }
 
         public void Activate(string token)
@@ -63,11 +60,6 @@ namespace Coupling.Domain.Model.Membership
         {
             Membership = new LocalMembership(salt, password);
             UpdateVersion();
-        }
-
-        public bool IsLocalMembershipActived()
-        {
-            return IsActivated;
         }
 
         public void AppendOAuthMembership(OAuthMembership membership)

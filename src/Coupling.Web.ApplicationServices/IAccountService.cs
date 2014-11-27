@@ -19,8 +19,11 @@ namespace Coupling.Web.ApplicationServices
         bool ChangePassword(string username, string oldPassword, string newPassword);
         bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer);
 
-        bool DeleteAccount(string userName);
         Account GetAccount(string username, bool isOnline);
-        
+
+        void AppendOAuthAccount(string username, string provider, string providerUserId);
+        int GetUserIdFromOAuth(string provider, string providerUserId);
+        string GetUserNameFromId(int userId);
+
     }
 }

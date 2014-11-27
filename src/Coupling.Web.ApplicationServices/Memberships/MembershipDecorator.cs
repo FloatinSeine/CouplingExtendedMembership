@@ -15,7 +15,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
                                                 string.Empty, 
                                                 string.Empty, 
                                                 string.Empty,
-                                                account.IsLocalMembershipActived(), 
+                                                account.AccountStatus == AccountStatus.Activated, 
                                                 false,
                                                 account.Created, 
                                                 DateTime.UtcNow, 
