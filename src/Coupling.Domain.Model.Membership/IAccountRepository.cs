@@ -11,6 +11,10 @@ namespace Coupling.Domain.Model.Membership
         Account GetByOAuthProvider(string provider, string providerUserId);
         Account GetByUserId(int userId);
         int GetNextUserId();
+        void AppendOAuthAccount(string username, string provider, string providerUserId);
+        void ChangePassword(string id, string salt, string password);
+        void ActivateAccount(string accountId, string activationToken);
+        bool ValidateCredentials(string accountId, string password);
         //bool AccountExists(string username, string passwordHash);
     }
 }

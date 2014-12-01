@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Coupling.Web.ApplicationServices.Implementation.Cryptography
+namespace Coupling.Security.Implementation
 {
     public sealed class CryptographyService : IEncrypt
     {

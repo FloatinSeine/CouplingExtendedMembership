@@ -4,10 +4,12 @@ namespace Coupling.Domain.Model.Membership.Commands
     public class PasswordMatch : AccountCommand
     {
         public bool Matched { get; private set; }
+        public Account Account { get; private set; }
 
-        public PasswordMatch(string id, bool match) : base(id)
+        public PasswordMatch(Account account, bool match) : base(account.Id)
         {
             Matched = match;
+            Account = account;
         }
     }
 }

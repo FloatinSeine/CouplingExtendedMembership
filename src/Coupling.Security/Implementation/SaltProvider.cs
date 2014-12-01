@@ -1,8 +1,8 @@
-﻿using System;
+﻿
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Coupling.Web.ApplicationServices.Implementation.Cryptography
+namespace Coupling.Security.Implementation
 {
     public class SaltProvider
     {

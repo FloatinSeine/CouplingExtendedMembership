@@ -3,9 +3,9 @@
 
 namespace Coupling.Domain.Model.Membership.Implementation.Queries
 {
-    public class AccountFinder : IFindAccountQuery
+    public class AccountFinder : IFindAccountQuery, IDisposable
     {
-        private readonly IAccountRepository _repository;
+        private IAccountRepository _repository;
 
         public AccountFinder(IAccountRepository repository)
         {
@@ -27,7 +27,6 @@ namespace Coupling.Domain.Model.Membership.Implementation.Queries
             return _repository.GetByConfirmationToken(confirmationToken);
         }
 
-
         public Account FindByOAuthProvider(string provider, string providerUserId)
         {
             return _repository.GetByOAuthProvider(provider, providerUserId);
@@ -38,9 +37,20 @@ namespace Coupling.Domain.Model.Membership.Implementation.Queries
             return _repository.GetByUserId(userId);
         }
 
+        public bool ValidateCredentials(string username, string passwordHash)
+        {
+            return _repository.ValidateCredentials(username, passwordHash);
+        }
+
         public string GetUserIdFromPasswordResetToken(string token)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _repository.Dispose();
+            _repository = null;
         }
     }
 }

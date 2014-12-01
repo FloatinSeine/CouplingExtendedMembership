@@ -16,7 +16,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
 {
     public class CouplingExtendedMembershipProvider : ExtendedMembershipProvider
     {
-        private IAccountService _service;
+        //private IAccountService _service;
         private bool _isInitialised;
 
         private int _maxInvalidPasswordAttempts;
@@ -84,8 +84,13 @@ namespace Coupling.Web.ApplicationServices.Memberships
 
         private void InitialiseService()
         {
-            _service = DependencyResolver.Current.GetService<IAccountService>();
-            _isInitialised = (_service != null);
+            //_service = DependencyResolver.Current.GetService<IAccountService>();
+            _isInitialised = true; //(_service != null);
+        }
+
+        private static IAccountService AccountService
+        {
+            get { return DependencyResolver.Current.GetService<IAccountService>(); }
         }
 
         public override string ApplicationName { get; set; }
@@ -150,7 +155,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
         {
             VerifyInitialised();
             ValidateArgument("accountConfirmationToken", accountConfirmationToken);
-            return _service.ConfirmAccount(accountConfirmationToken);
+            return AccountService.ConfirmAccount(accountConfirmationToken);
         }
 
         public override bool ConfirmAccount(string userName, string accountConfirmationToken)
@@ -159,7 +164,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             ValidateArgument("userName", userName);
             ValidateArgument("accountConfirmationToken", accountConfirmationToken);
 
-            return _service.ConfirmAccount(userName, accountConfirmationToken);
+            return AccountService.ConfirmAccount(userName, accountConfirmationToken);
         }
 
         public override string CreateAccount(string userName, string password, bool requireConfirmationToken)
@@ -173,12 +178,12 @@ namespace Coupling.Web.ApplicationServices.Memberships
             {
                 throw new MembershipCreateUserException(MembershipCreateStatus.InvalidUserName);
             }
-            if (_service.GetAccount(userName, true) != null)
+            if (AccountService.GetAccount(userName, true) != null)
             {
                 throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateUserName);
             }
 
-            return _service.CreateAccount(userName, password, requireConfirmationToken);
+            return AccountService.CreateAccount(userName, password, requireConfirmationToken);
         }
 
         public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
@@ -202,7 +207,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             VerifyInitialised();
             ValidateArgument("userName", userName);
 
-            return _service.GeneratePasswordResetToken(userName, tokenExpirationInMinutesFromNow);
+            return AccountService.GeneratePasswordResetToken(userName, tokenExpirationInMinutesFromNow);
         }
 
         public override ICollection<OAuthAccountData> GetAccountsForUser(string userName)
@@ -210,7 +215,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             VerifyInitialised();
             ValidateArgument("userName", userName);
 
-            var acc = _service.GetAccount(userName, true);
+            var acc = AccountService.GetAccount(userName, true);
             if (acc.AuthMemberships.Count == 0) return new Collection<OAuthAccountData>();
             return acc.AuthMemberships.Select(mem => new OAuthAccountData(mem.Provider, mem.ProviderUserId)).ToList();
         }
@@ -221,7 +226,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             ValidateArgument("userName", userName);
 
 
-            var acc = _service.GetAccount(userName, true);
+            var acc = AccountService.GetAccount(userName, true);
             return acc.Created;
         }
 
@@ -229,21 +234,21 @@ namespace Coupling.Web.ApplicationServices.Memberships
         {
             VerifyInitialised();
             ValidateArgument("userName", userName);
-            return _service.GetLastPasswordFailureDate(userName);
+            return AccountService.GetLastPasswordFailureDate(userName);
         }
 
         public override DateTime GetPasswordChangedDate(string userName)
         {
             VerifyInitialised();
             ValidateArgument("userName", userName);
-            return _service.GetPasswordChangedDate(userName);
+            return AccountService.GetPasswordChangedDate(userName);
         }
 
         public override int GetPasswordFailuresSinceLastSuccess(string userName)
         {
             VerifyInitialised();
             ValidateArgument("userName", userName);
-            return _service.GetPasswordFailuresSinceLastSuccess(userName);
+            return AccountService.GetPasswordFailuresSinceLastSuccess(userName);
         }
 
         public override int GetUserIdFromPasswordResetToken(string token)
@@ -256,7 +261,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
         {
             VerifyInitialised();
             ValidateArgument("userName", userName);
-            var acc = _service.GetAccount(userName, true);
+            var acc = AccountService.GetAccount(userName, true);
             return (acc.AccountStatus == AccountStatus.Activated);
         }
 
@@ -265,7 +270,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             VerifyInitialised();
             ValidateArgument("token", token);
             ValidateArgument("newPassword", newPassword);
-            return _service.ResetPasswordWithToken(token, newPassword);
+            return AccountService.ResetPasswordWithToken(token, newPassword);
         }
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
@@ -275,7 +280,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
             ValidateArgument("oldPassword", oldPassword);
             ValidateArgument("newPassword", newPassword);
 
-            return _service.ChangePassword(username, oldPassword, newPassword);
+            return AccountService.ChangePassword(username, oldPassword, newPassword);
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
@@ -285,8 +290,8 @@ namespace Coupling.Web.ApplicationServices.Memberships
             ValidateArgument("password", password);
             ValidateArgument("newPasswordQuestion", newPasswordQuestion);
             ValidateArgument("newPasswordAnswer", newPasswordAnswer);
-            
-            return _service.ChangePasswordQuestionAndAnswer(username, password, newPasswordQuestion, newPasswordAnswer);
+
+            return AccountService.ChangePasswordQuestionAndAnswer(username, password, newPasswordQuestion, newPasswordAnswer);
         }
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out System.Web.Security.MembershipCreateStatus status)
@@ -334,7 +339,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
         {
             VerifyInitialised();
             ValidateArgument("username", username);
-            var acc = _service.GetAccount(username, userIsOnline);
+            var acc = AccountService.GetAccount(username, userIsOnline);
             return MembershipDecorator.Decorate(acc);
         }
 
@@ -374,28 +379,40 @@ namespace Coupling.Web.ApplicationServices.Memberships
             ValidateArgument("username", username);
             ValidateArgument("password", password);
 
-            return _service.ValidateAccount(username, password);
+            return AccountService.ValidateAccount(username, password);
         }
 
         public override bool HasLocalAccount(int userId)
         {
             VerifyInitialised();
-            return true;
+            var usn = GetUserNameFromId(userId);
+            var acc = AccountService.GetAccount(usn, true);
+            return (acc.Membership != null);
         }
 
         public override string GetUserNameFromId(int userId)
         {
-            return _service.GetUserNameFromId(userId);
+            VerifyInitialised();
+            return AccountService.GetUserNameFromId(userId);
         }
 
         public override int GetUserIdFromOAuth(string provider, string providerUserId)
         {
-            return _service.GetUserIdFromOAuth(provider, providerUserId);
+            VerifyInitialised();
+            return AccountService.GetUserIdFromOAuth(provider, providerUserId);
         }
 
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
-            _service.AppendOAuthAccount(userName, provider, providerUserId);
+            VerifyInitialised();
+            AccountService.AppendOAuthAccount(userName, provider, providerUserId);
+        }
+
+
+        public override void DeleteOAuthAccount(string provider, string providerUserId)
+        {
+            throw new NotImplementedException();
+            //base.DeleteOAuthAccount(provider, providerUserId);
         }
 
         private static void ValidateArgument(string argumentName, string value)

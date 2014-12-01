@@ -9,6 +9,7 @@ namespace Coupling.Domain.Model.Membership
         Account FindByConfirmationToken(string confirmationToken);
         Account FindByOAuthProvider(string provider, string providerUserId);
         Account FindByUserId(int userId);
+        bool ValidateCredentials(string username, string passwordHash);
         string GetUserIdFromPasswordResetToken(string token);
     }
 }

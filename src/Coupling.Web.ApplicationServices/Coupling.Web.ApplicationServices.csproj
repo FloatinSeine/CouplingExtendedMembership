@@ -62,12 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ApplicationServicesConfigurationManager.cs" />
-    <Compile Include="Implementation\Cryptography\CryptographyService.cs" />
-    <Compile Include="Implementation\Cryptography\SaltProvider.cs" />
     <Compile Include="DependencyResolution\WebApplicationServicesRegistry.cs" />
     <Compile Include="Extensions\NameValueCollectionExtension.cs" />
     <Compile Include="IAccountService.cs" />
-    <Compile Include="IEncrypt.cs" />
     <Compile Include="Implementation\AccountService.cs" />
     <Compile Include="Memberships\ConvertEntityId.cs" />
     <Compile Include="Memberships\CouplingExtendedMembershipProvider.cs" />
@@ -88,6 +85,10 @@
     <ProjectReference Include="..\Coupling.Domain\Coupling.Domain.csproj">
       <Project>{5F024EF9-F508-472B-9BBA-8557DBD7FF2E}</Project>
       <Name>Coupling.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coupling.Security\Coupling.Security.csproj">
+      <Project>{CAA5DAD2-6D6B-4642-80B3-B402841FFDF0}</Project>
+      <Name>Coupling.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

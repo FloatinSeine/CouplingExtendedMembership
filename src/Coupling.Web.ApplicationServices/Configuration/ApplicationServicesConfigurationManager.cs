@@ -6,7 +6,6 @@ namespace Coupling.Web.ApplicationServices.Configuration
 {
     public class ApplicationServicesConfigurationManager
     {
-        internal const string EncryptionKey = "MAKV2SPBNI992!2";
         private IDictionary<string, string> _appSettings;
 
         public IDictionary<string, string> AppSettings

@@ -1,12 +1,13 @@
 ﻿
+using System;
 using Coupling.Domain.CQRS.Command;
 using Coupling.Domain.Model.Membership.Commands;
 
 namespace Coupling.Domain.Model.Membership.Handlers
 {
-    public class AccountOAuthHandler : ICommand<AppendOAuthAccountCommand>
+    public class AccountOAuthHandler : ICommand<AppendOAuthAccountCommand>, IDisposable
     {
-        private readonly IAccountRepository _repository;
+        private IAccountRepository _repository;
 
         public AccountOAuthHandler(IAccountRepository repository)
         {
@@ -15,9 +16,13 @@ namespace Coupling.Domain.Model.Membership.Handlers
 
         public void Execute(AppendOAuthAccountCommand command)
         {
-            var acc = _repository.Get(command.Id);
-            acc.AppendOAuthMembership(new OAuthMembership(command.Provider, command.ProviderUserId));
-            _repository.CommitChanges();
+            _repository.AppendOAuthAccount(command.Id, command.Provider, command.ProviderUserId);
+        }
+
+        public void Dispose()
+        {
+            _repository.Dispose();
+            _repository = null;
         }
     }
 }

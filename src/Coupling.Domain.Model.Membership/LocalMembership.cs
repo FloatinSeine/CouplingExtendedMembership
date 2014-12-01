@@ -10,6 +10,7 @@ namespace Coupling.Domain.Model.Membership
             Password = password;
             Salt = salt;
             PasswordChangeDate = DateTime.UtcNow;
+            FailedPasswordMatchAttempts = 0;
             ResetPasswordMatches();
         }
 

@@ -1,5 +1,5 @@
 ﻿
-namespace Coupling.Web.ApplicationServices
+namespace Coupling.Security
 {
     public interface IEncrypt
     {

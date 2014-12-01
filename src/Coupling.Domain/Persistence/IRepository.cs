@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Coupling.Domain.Persistence
 {
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
 
     }

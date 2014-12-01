@@ -4,18 +4,31 @@ using Raven.Client;
 
 namespace Coupling.Domain.Persistence.Raven
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
+        protected IRavenSessionFactory _factory;
+
         protected IDocumentSession Session { get; private set; }
+
+        //protected IDocumentSession Session
+        //{
+        //    get { return _factory.CreateSession(); }
+        //}
 
         protected BaseRepository(IRavenSessionFactory factory)
         {
-            Session = factory.CreateSession();
+            _factory = factory;
+            //Session = factory.CreateSession();
         }
 
         public TEntity Get(string id)
         {
-            return Session.Load<TEntity>(id);
+            TEntity ent = null;
+            using (var session = _factory.CreateSession())
+            {
+                ent = session.Load<TEntity>(id);
+            }
+            return ent;
         }
 
         public IEnumerable<TEntity> GetAll()
@@ -55,7 +68,8 @@ namespace Coupling.Domain.Persistence.Raven
 
         public void Dispose()
         {
-            Session.Dispose();
+            _factory = null;
+            if (Session!=null) Session.Dispose();
             Session = null;
         }
     }

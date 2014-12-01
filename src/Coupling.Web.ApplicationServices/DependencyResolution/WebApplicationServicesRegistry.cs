@@ -1,5 +1,4 @@
 ﻿
-using Coupling.Web.ApplicationServices.Implementation.Cryptography;
 using Coupling.Web.ApplicationServices.Implementation;
 using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
@@ -11,7 +10,6 @@ namespace Coupling.Web.ApplicationServices.DependencyResolution
         public WebApplicationServicesRegistry()
         {
             For<IAccountService>(new UniquePerRequestLifecycle()).Use<AccountService>();
-            For<IEncrypt>().Use<CryptographyService>();
         }
     }
 }

@@ -6,15 +6,13 @@ namespace Coupling.Domain.Model.Membership
 {
     public sealed class Account : AggregateRoot
     {
-        private readonly List<OAuthMembership> _authMemberships; 
-
         internal Account()
         {
             Created = DateTime.UtcNow;
             Activated = DateTime.MaxValue;
             ActivationToken = string.Empty;
             AccountStatus = AccountStatus.PendingActivation;
-            _authMemberships = new List<OAuthMembership>();
+            AuthMemberships = new List<OAuthMembership>();
         }
 
         public string Username { get; private set; }
@@ -24,7 +22,7 @@ namespace Coupling.Domain.Model.Membership
         public string ActivationToken { get; private set; }
         public AccountStatus AccountStatus { get; private set; }
 
-        public List<OAuthMembership> AuthMemberships { get { return _authMemberships; }}
+        public List<OAuthMembership> AuthMemberships { get; private set; }
         public LocalMembership Membership { get; private set; }
 
         internal void SetCredentials(int userId, string username, string salt, string hashPassword)
@@ -53,7 +51,14 @@ namespace Coupling.Domain.Model.Membership
 
         public bool IsValidPassword(string passwordHash)
         {
-            return Membership != null && Membership.IsValidPassword(passwordHash);
+            if (Membership == null) return false;
+
+            var b = Membership.IsValidPassword(passwordHash);
+            if (b) Membership.FailedPasswordMatch();
+            else Membership.ResetPasswordMatches();
+
+            UpdateVersion();
+            return b;
         }
 
         public void ChangePassword(string salt, string password)
@@ -64,7 +69,7 @@ namespace Coupling.Domain.Model.Membership
 
         public void AppendOAuthMembership(OAuthMembership membership)
         {
-            _authMemberships.Add(membership);
+            AuthMemberships.Add(membership);
             UpdateVersion();
         }
     }

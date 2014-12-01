@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{193B6D01-4A32-4482-9C42-FD742A5CD48F}</ProjectGuid>
+    <ProjectGuid>{37D2B6CD-EF9B-4989-B5D0-D4B6ED5D5033}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coupling.Web.ApplicationServices.Tests</RootNamespace>
-    <AssemblyName>Coupling.Web.ApplicationServices.Tests</AssemblyName>
+    <RootNamespace>Coupling.Security.Tests</RootNamespace>
+    <AssemblyName>Coupling.Security.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\NameValueCollectionExtensionTests.cs" />
+    <Compile Include="CryptographicServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaltProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Coupling.Web.ApplicationServices\Coupling.Web.ApplicationServices.csproj">
-      <Project>{EDCFFD36-B49F-4502-B034-BD91E19BAD9A}</Project>
-      <Name>Coupling.Web.ApplicationServices</Name>
+    <ProjectReference Include="..\Coupling.Security\Coupling.Security.csproj">
+      <Project>{CAA5DAD2-6D6B-4642-80B3-B402841FFDF0}</Project>
+      <Name>Coupling.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

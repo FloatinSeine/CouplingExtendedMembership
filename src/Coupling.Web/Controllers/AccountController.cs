@@ -133,11 +133,9 @@ namespace Coupling.Web.Controllers
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
 
-            //var x = WebSecurity.GetUserId(User.Identity.Name);
-            //throw new Exception("User Id = " + x);
-
-            ViewBag.HasLocalPassword = true; OAuthWebSecurity.HasLocalAccount(1);
-            //ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            //ViewBag.HasLocalPassword = true; OAuthWebSecurity.HasLocalAccount(1);
+            var uid = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(uid);
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -149,7 +147,7 @@ namespace Coupling.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = true; //OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
@@ -329,7 +327,7 @@ namespace Coupling.Web.Controllers
                 });
             }
 
-            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || true; //OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 

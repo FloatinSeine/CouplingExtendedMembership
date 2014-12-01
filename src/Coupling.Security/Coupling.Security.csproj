@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{193B6D01-4A32-4482-9C42-FD742A5CD48F}</ProjectGuid>
+    <ProjectGuid>{CAA5DAD2-6D6B-4642-80B3-B402841FFDF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coupling.Web.ApplicationServices.Tests</RootNamespace>
-    <AssemblyName>Coupling.Web.ApplicationServices.Tests</AssemblyName>
+    <RootNamespace>Coupling.Security</RootNamespace>
+    <AssemblyName>Coupling.Security</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    <Reference Include="StructureMap, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,14 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\NameValueCollectionExtensionTests.cs" />
+    <Compile Include="Configuration\SecurityConfigurationSection.cs" />
+    <Compile Include="DependencyResolution\SecurityRepository.cs" />
+    <Compile Include="IEncrypt.cs" />
+    <Compile Include="Implementation\CryptographyService.cs" />
+    <Compile Include="Implementation\SaltProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Coupling.Web.ApplicationServices\Coupling.Web.ApplicationServices.csproj">
-      <Project>{EDCFFD36-B49F-4502-B034-BD91E19BAD9A}</Project>
-      <Name>Coupling.Web.ApplicationServices</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

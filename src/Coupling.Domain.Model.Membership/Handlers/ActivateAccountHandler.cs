@@ -14,9 +14,7 @@ namespace Coupling.Domain.Model.Membership.Handlers
 
         public void Execute(ActivateAccountCommand command)
         {
-            var acc = _repository.Get(command.Id);
-            acc.Activate(command.Token);
-            _repository.CommitChanges();
+            _repository.ActivateAccount(command.Id, command.Token);
         }
     }
 }

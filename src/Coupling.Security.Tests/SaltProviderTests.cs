@@ -1,7 +1,7 @@
-﻿using Coupling.Web.ApplicationServices.Implementation.Cryptography;
+﻿using Coupling.Security.Implementation;
 using NUnit.Framework;
 
-namespace Coupling.Web.ApplicationServices.Tests.Cryptography
+namespace Coupling.Security.Tests
 {
     [TestFixture]
     public class SaltProviderTests

@@ -11,7 +11,7 @@ namespace Coupling.Web.ApplicationServices.Memberships
 
             var membership = new MembershipUser(Membership.Provider.Name, 
                                                 account.Username, 
-                                                account.Id, 
+                                                account.UserId, 
                                                 string.Empty, 
                                                 string.Empty, 
                                                 string.Empty,

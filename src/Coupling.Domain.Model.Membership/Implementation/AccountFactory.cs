@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Coupling.Domain.Model.Membership.Implementation
 {
     public class AccountFactory : IAccountFactory
@@ -12,7 +14,9 @@ namespace Coupling.Domain.Model.Membership.Implementation
 
         public Account Create(string username, string salt, string hashPassword, string activationToken)
         {
-            var acc = _repository.GetByUsername(username) ?? new Account();
+            if (_repository.GetByUsername(username) != null) throw new Exception("Account with Username already exists");
+
+            var acc = new Account();
             if (string.IsNullOrEmpty(activationToken))
             {
 
@@ -25,7 +29,6 @@ namespace Coupling.Domain.Model.Membership.Implementation
             }
 
             _repository.Store(acc);
-
             return acc;
         }
     }

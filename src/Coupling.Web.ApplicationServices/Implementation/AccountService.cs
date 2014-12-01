@@ -2,17 +2,18 @@
 using Coupling.Domain.CQRS.Command;
 using Coupling.Domain.Model.Membership;
 using Coupling.Domain.Model.Membership.Commands;
+using Coupling.Security;
 using Coupling.Web.ApplicationServices.Memberships;
 
 namespace Coupling.Web.ApplicationServices.Implementation
 {
-    public class AccountService : IAccountService
+    public class AccountService : IAccountService, IDisposable
     {
         private readonly IEncrypt _encryptor;
         private readonly IBus _bus;
-        private readonly IAccountFactory _factory;
-        private readonly IFindAccountQuery _query;
-        private readonly IFailedPasswordQuery _failedQuery;
+        private IAccountFactory _factory;
+        private IFindAccountQuery _query;
+        private IFailedPasswordQuery _failedQuery;
 
         public AccountService(IEncrypt encryptor, IBus bus, IAccountFactory factory, IFindAccountQuery query, IFailedPasswordQuery failedQuery)
         {
@@ -49,18 +50,16 @@ namespace Coupling.Web.ApplicationServices.Implementation
         }
 
         public bool ValidateAccount(string username, string password)
-        {
+        {            
             if (string.IsNullOrEmpty(username)) throw new ArgumentException("Username is invalid", "username");
             if (string.IsNullOrEmpty(username)) throw new ArgumentException("Password is invalid", "password");
-
+            
             var acc = GetAccount(username, true);
             if (acc == null) return false;
 
             var hash = _encryptor.Encrypt(password, acc.Membership.Salt);
-            var b = acc.IsValidPassword(hash);
 
-            _bus.Send(new PasswordMatch(acc.Id, b));
-            return b;
+            return _query.ValidateCredentials(username, hash);
         }
 
         public DateTime GetLastPasswordFailureDate(string userName)
@@ -107,7 +106,7 @@ namespace Coupling.Web.ApplicationServices.Implementation
             var hash = _encryptor.Encrypt(oldPassword, acc.Membership.Salt);
             if (!acc.IsValidPassword(hash))
             {
-                _bus.Send(new PasswordMatch(acc.Id, false));
+                _bus.Send(new PasswordMatch(acc, false));
                 throw new Exception("User Credentials do not match");
             }
 
@@ -155,6 +154,13 @@ namespace Coupling.Web.ApplicationServices.Implementation
             var splitIdx = hash.IndexOf("#-#", StringComparison.InvariantCulture);
             if (splitIdx == -1) return hash;
             return hash.Substring(splitIdx + 3);
+        }
+
+        public void Dispose()
+        {
+            _factory = null;
+            _query = null;
+            _failedQuery = null;
         }
 
     }
