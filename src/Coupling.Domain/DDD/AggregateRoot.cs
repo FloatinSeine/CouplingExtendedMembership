@@ -20,7 +20,6 @@ namespace Coupling.Domain.DDD
             Version = DateTime.UtcNow;
         }
 
-        
         protected internal virtual IDomainEventPublisher EventPublisher
         {
             get { return _eventPublisher; }

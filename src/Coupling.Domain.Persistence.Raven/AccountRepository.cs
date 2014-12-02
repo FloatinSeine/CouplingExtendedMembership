@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using Coupling.Domain.Model.Membership;
 using Coupling.Domain.Persistence.Raven.Indexes;
 using Raven.Client;
@@ -46,14 +48,25 @@ namespace Coupling.Domain.Persistence.Raven
 
         public Account GetByOAuthProvider(string provider, string providerUserId)
         {
+            if (string.IsNullOrEmpty(provider)) throw new ArgumentException(string.Format("Invalid Argument {0}", provider), "provider");
+            if (string.IsNullOrEmpty(providerUserId)) throw new ArgumentException(string.Format("Invalid Argument {0}", providerUserId), "providerUserId");
+
             Account acc = null;
             using (var session = _factory.CreateSession())
             {
-                var query = session.Query<OAuthMembershipsQueryResult, IndexOAuthMemberships>()
-                    .AsProjection<OAuthMembershipsQueryResult>()
-                    .SingleOrDefault(x => x.Provider == provider && x.ProviderUserId == providerUserId);
-                
-                if (query != null) acc = session.Query<Account>().Single(x => x.Username == query.UserName);
+                try
+                {
+                    var query = session.Query<Account, AccountAuthMemberships>()
+                        .ProjectFromIndexFieldsInto<AccountAuthMemberships.AuthResults>()
+                        .Where(x => x.Provider == provider && x.ProviderUserId == providerUserId)
+                        .SingleOrDefault();
+
+                    if (query != null) acc = session.Query<Account>().Single(x => x.Username == query.Username);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("Cant find account for Provider {0}, UserId {1}", provider, providerUserId), ex);
+                } 
             }
             return acc;
         }

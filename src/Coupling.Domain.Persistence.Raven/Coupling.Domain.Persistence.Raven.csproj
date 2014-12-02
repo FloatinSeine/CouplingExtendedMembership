@@ -53,11 +53,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountRepository.cs" />
@@ -65,7 +60,7 @@
     <Compile Include="Configuration\RavenConfigurationManager.cs" />
     <Compile Include="Implementation\CouplingRavenSessionFactoryBuilder.cs" />
     <Compile Include="DepenencyResolution\RavenRepositoryRegistry.cs" />
-    <Compile Include="Indexes\IndexOAuthMemberships.cs" />
+    <Compile Include="Indexes\AccountAuthMemberships.cs" />
     <Compile Include="Indexes\NextUserIdIndex.cs" />
     <Compile Include="IRavenSessionFactory.cs" />
     <Compile Include="IRavenSessionFactoryBuilder.cs" />
