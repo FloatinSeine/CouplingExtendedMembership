@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using Coupling.Domain.Model.Membership;
 using Coupling.Domain.Persistence.Raven.Indexes;
 using Raven.Client;
