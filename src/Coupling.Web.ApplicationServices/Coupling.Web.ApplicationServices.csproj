@@ -59,14 +59,22 @@
     <Compile Include="Configuration\ApplicationServicesConfigurationManager.cs" />
     <Compile Include="DependencyResolution\WebApplicationServicesRegistry.cs" />
     <Compile Include="Extensions\NameValueCollectionExtension.cs" />
+    <Compile Include="IAccountRolesService.cs" />
     <Compile Include="IAccountService.cs" />
     <Compile Include="Implementation\AccountService.cs" />
+    <Compile Include="Implementation\AccountRolesService.cs" />
+    <Compile Include="IRoleFactory.cs" />
     <Compile Include="Memberships\ConvertEntityId.cs" />
     <Compile Include="Memberships\CouplingExtendedMembershipProvider.cs" />
+    <Compile Include="Memberships\CouplingRoleProvider.cs" />
     <Compile Include="Memberships\MembershipDecorator.cs" />
     <Compile Include="Memberships\PasswordStrengthRegularExpressions.cs" />
     <Compile Include="Memberships\TokenFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roles\AdministratorRole.cs" />
+    <Compile Include="Roles\GuestRole.cs" />
+    <Compile Include="Roles\Role.cs" />
+    <Compile Include="Roles\RoleFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coupling.Domain.Model.Membership\Coupling.Domain.Model.Membership.csproj">

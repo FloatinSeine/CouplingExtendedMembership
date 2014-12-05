@@ -189,6 +189,7 @@
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\LocalPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Profile\PersonalInformationModel.cs" />
     <Compile Include="Models\RegisterExternalLoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -328,6 +329,9 @@
       <Project>{EDCFFD36-B49F-4502-B034-BD91E19BAD9A}</Project>
       <Name>Coupling.Web.ApplicationServices</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_PersonalInformation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

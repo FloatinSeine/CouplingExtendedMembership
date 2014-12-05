@@ -1,0 +1,31 @@
+﻿@model Coupling.Web.Models.Profile.PersonalInformationModel
+
+<h3>Standard Information</h3>
+
+@using (Html.BeginForm("Personal", "Profile")) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Personal Information</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Mobile)
+                @Html.TextBoxFor(m => m.Mobile)
+            </li>
+        </ol>
+        <input type="submit" value="Change" />
+    </fieldset>
+}

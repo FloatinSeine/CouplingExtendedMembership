@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Coupling.Domain.DDD;
 
 namespace Coupling.Domain.Model.Membership
@@ -13,6 +14,7 @@ namespace Coupling.Domain.Model.Membership
             ActivationToken = string.Empty;
             AccountStatus = AccountStatus.PendingActivation;
             AuthMemberships = new List<OAuthMembership>();
+            Roles = new List<string>();
         }
 
         public string Username { get; private set; }
@@ -24,6 +26,7 @@ namespace Coupling.Domain.Model.Membership
 
         public List<OAuthMembership> AuthMemberships { get; private set; }
         public LocalMembership Membership { get; private set; }
+        public IList<string> Roles { get; private set; }
 
         internal void SetCredentials(int userId, string username, string salt, string hashPassword)
         {
@@ -71,6 +74,22 @@ namespace Coupling.Domain.Model.Membership
         {
             AuthMemberships.Add(membership);
             UpdateVersion();
+        }
+
+        public void AppendRoles(string[] roles)
+        {
+            foreach (var r in roles.Where(r => !Roles.Contains(r)))
+            {
+                Roles.Add(r);
+            }
+        }
+
+        public void RemoveRoles(string[] roles)
+        {
+            foreach (var r in roles)
+            {
+                Roles.Remove(r);
+            }
         }
     }
 }

@@ -1,5 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Profile";
 }
 
-<h2>Index</h2>
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
+
+Add Profile editing actions here
+@if (User.Identity.IsAuthenticated) {
+    @Html.Partial("_PersonalInformation")
+}

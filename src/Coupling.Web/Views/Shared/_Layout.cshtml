@@ -21,6 +21,10 @@
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
+                            }
                             <li>@Html.ActionLink("About", "Index", "About")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "About")</li>
                         </ul>

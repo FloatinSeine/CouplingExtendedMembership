@@ -16,5 +16,7 @@ namespace Coupling.Domain.Model.Membership
         void ActivateAccount(string accountId, string activationToken);
         bool ValidateCredentials(string accountId, string password);
         //bool AccountExists(string username, string passwordHash);
+        void AppendRoles(string accountId, string[] roles);
+        void RemoveRoles(string accountId, string[] roles);
     }
 }

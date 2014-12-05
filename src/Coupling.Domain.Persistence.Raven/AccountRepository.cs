@@ -138,5 +138,26 @@ namespace Coupling.Domain.Persistence.Raven
             return Enumerable.Any(q, m => m.IsValidPassword(passwordHash));
         }
 
+
+
+        public void AppendRoles(string accountId, string[] roles)
+        {
+            using (var session = _factory.CreateSession())
+            {
+                var acc = session.Load<Account>(accountId);
+                acc.AppendRoles(roles);
+                session.SaveChanges();
+            }
+        }
+
+        public void RemoveRoles(string accountId, string[] roles)
+        {
+            using (var session = _factory.CreateSession())
+            {
+                var acc = session.Load<Account>(accountId);
+                acc.RemoveRoles(roles);
+                session.SaveChanges();
+            }
+        }
     }
 }
