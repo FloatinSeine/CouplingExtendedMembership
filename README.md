@@ -1,7 +1,7 @@
 Coupling - ExtendedMembershipProvider
 ===========
 
-An example to demonstrate using the ExtendedMembershipProvider with a DDD membership account model data management and <a href="http://ravendb.net">RaveDB</a> storage.
+An example to demonstrate using the ASP.Net MVC 4 ExtendedMembershipProvider with a DDD membership account model data management and <a href="http://ravendb.net">RavenDB</a> storage.
 The aim was the decouple the storage engine from the main application and Membership Provider.<br />
 Allows Standard local membership and social membership sign in. Also includes a simple roles provider for authorisation.<br />
 <br />
